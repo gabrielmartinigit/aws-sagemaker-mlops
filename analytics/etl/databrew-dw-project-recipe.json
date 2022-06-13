@@ -1,0 +1,70 @@
+[
+  {
+    "Action": {
+      "Operation": "FILL_WITH_MOST_FREQUENT",
+      "Parameters": {
+        "sourceColumn": "uf_origem_volta"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "REPLACE_TEXT",
+      "Parameters": {
+        "pattern": ",",
+        "sourceColumn": "valor_passagem",
+        "value": "."
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "REPLACE_TEXT",
+      "Parameters": {
+        "pattern": ",",
+        "sourceColumn": "taxa_servico",
+        "value": "."
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "decimal",
+        "sourceColumn": "valor_passagem"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "NUMBER_FORMAT",
+      "Parameters": {
+        "decimalPlaces": "2",
+        "numericDecimalSeparator": ".",
+        "numericFormatType": "DECIMAL_PRECISION",
+        "sourceColumn": "valor_passagem"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "decimal",
+        "sourceColumn": "taxa_servico"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "NUMBER_FORMAT",
+      "Parameters": {
+        "decimalPlaces": "2",
+        "numericDecimalSeparator": ".",
+        "numericFormatType": "DECIMAL_PRECISION",
+        "sourceColumn": "taxa_servico"
+      }
+    }
+  }
+]
