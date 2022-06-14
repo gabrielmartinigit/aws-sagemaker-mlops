@@ -518,6 +518,32 @@
           "name": "default"
         }
       ]
+    },
+    {
+      "node_id": "35eee75c-68ad-46fb-a277-593af41ee5af",
+      "type": "DESTINATION",
+      "operator": "sagemaker.spark.s3_destination_0.1",
+      "name": "S3: feedbacks",
+      "parameters": {
+        "output_config": {
+          "compression": "none",
+          "output_path": "s3://cgu-poc-sagemaker/datasets/",
+          "output_content_type": "CSV",
+          "delimiter": ","
+        }
+      },
+      "inputs": [
+        {
+          "name": "default",
+          "node_id": "ac78be1b-4ba6-46a0-a50e-417be2cf0969",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
     }
   ]
 }
