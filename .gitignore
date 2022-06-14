@@ -133,3 +133,6 @@ dmypy.json
 
 # OSx
 .DS_Store
+
+# AI/ML
+checkpoints/
