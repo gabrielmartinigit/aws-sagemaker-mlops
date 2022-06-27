@@ -520,7 +520,38 @@
       ]
     },
     {
-      "node_id": "35eee75c-68ad-46fb-a277-593af41ee5af",
+      "node_id": "6305e76c-96e8-4dbf-9f13-6a617b1e72de",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.handle_missing_0.1",
+      "parameters": {
+        "operator": "Drop missing",
+        "drop_missing_parameters": {
+          "input_column": [
+            "comments"
+          ]
+        },
+        "impute_parameters": {
+          "column_type": "Numeric",
+          "numeric_parameters": {
+            "strategy": "Approximate Median"
+          }
+        }
+      },
+      "inputs": [
+        {
+          "name": "df",
+          "node_id": "1b66fd21-df86-4191-bd89-1d2f2db0e65c",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "6f38ffeb-2ca7-4dbe-b8a1-7618e448b3e4",
       "type": "DESTINATION",
       "operator": "sagemaker.spark.s3_destination_0.1",
       "name": "S3: feedbacks",
@@ -534,7 +565,57 @@
       },
       "inputs": [
         {
-          "name": "default",
+          "name": "df",
+          "node_id": "81ea375b-ec98-4c82-b836-4d70e86a4cb3",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "81ea375b-ec98-4c82-b836-4d70e86a4cb3",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.custom_code_0.1",
+      "parameters": {
+        "operator": "Python (Pandas)",
+        "pandas_parameters": {
+          "code": "# Table is available as variable `df`\ndf['labels'] = df['labels'].apply(lambda x: 1 if x == 'positivo' else 0)"
+        },
+        "pyspark_parameters": {},
+        "name": "labels to 0 and 1"
+      },
+      "inputs": [
+        {
+          "name": "df",
+          "node_id": "6305e76c-96e8-4dbf-9f13-6a617b1e72de",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "1b66fd21-df86-4191-bd89-1d2f2db0e65c",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.custom_code_0.1",
+      "parameters": {
+        "operator": "Python (Pandas)",
+        "pandas_parameters": {
+          "code": "# Table is available as variable `df`\ndf['comments'] = df['comments'].apply(lambda x: x[:512] if len(x) > 512 else x)"
+        },
+        "pyspark_parameters": {},
+        "name": "Limit comment size"
+      },
+      "inputs": [
+        {
+          "name": "df",
           "node_id": "ac78be1b-4ba6-46a0-a50e-417be2cf0969",
           "output_name": "default"
         }
