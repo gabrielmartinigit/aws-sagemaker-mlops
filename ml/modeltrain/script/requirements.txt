@@ -1,0 +1,6 @@
+sklearn
+requests
+regex
+sentencepiece
+sacremoses
+transformers

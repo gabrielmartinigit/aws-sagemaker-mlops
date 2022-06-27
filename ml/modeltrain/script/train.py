@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 import time
+from datetime import datetime
 
 import numpy as np
 import pandas as pd
@@ -72,7 +73,6 @@ class BertDataset(Dataset):
         })
 
     def __len__(self):
-        """ Return data length """
         return self.label.shape[0]
 
 
@@ -97,12 +97,6 @@ def my_collate(batches):
 def loss_fun(outputs, targets):
     loss = nn.CrossEntropyLoss()
     return loss(outputs, targets)
-
-
-def flat_accuracy(preds, labels):
-    pred_flat = np.argmax(preds, axis=1).flatten()
-    labels_flat = labels.flatten()
-    return np.sum(pred_flat == labels_flat) / len(labels_flat)
 
 
 def _get_train_data_loader(batch_size, training_dir, is_distributed):
@@ -294,7 +288,7 @@ def train(args):
     for epoch in range(1, args.epochs + 1):
         t0 = time.time()
         print(
-            f"\n=============== EPOCH {epoch} / {args.epochs + 1} ===============\n")
+            f"\n=============== EPOCH {epoch} / {args.epochs} ===============\n")
         batches_losses_tmp = train_loop(
             train_data_loader, model, optimizer, device)
         epoch_loss = np.mean(batches_losses_tmp)
@@ -311,11 +305,12 @@ def train(args):
         val_losses.append(np.mean(val_losses_tmp))
         batches_losses.append(np.mean(batches_losses_tmp))
         batches_probs.append(output)
-        # torch.save(model, f"./checkpoints/model_epoch_{epoch+1}.pt")
 
-    logger.info("Saving model...")
-    model_2_save = model.module if hasattr(model, "module") else model
-    model_2_save.save_pretrained(save_directory=args.model_dir)
+    print("Saving model...")
+    torch.save(
+        model,
+        f"{args.model_dir}/model_bert_{datetime.now().strftime('%H-%M-%S')}.pt"
+    )
 
 
 if __name__ == "__main__":
