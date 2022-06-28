@@ -1,0 +1,32 @@
+name: Start SageMaker pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: us-east-1
+  RELEASE_ID: ${{ github.sha }}
+  PIPELINE_NAME: feedbacks-pipeline
+
+jobs:
+  start-sg-pipeline:
+    name: Start SageMaker Pipeline
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: AWS CLI start pipeline
+        run: |
+          aws sagemaker start-pipeline-execution --pipeline-name  ${{ env.PIPELINE_NAME }}
