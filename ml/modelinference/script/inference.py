@@ -4,29 +4,42 @@ import sys
 import os
 
 import torch
+import torch.nn as nn
 from transformers import BertTokenizer
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 
 BERT_MODEL_NAME = 'neuralmind/bert-base-portuguese-cased'
 VERSION = 'demo'
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(device)
 tokenizer = BertTokenizer.from_pretrained(BERT_MODEL_NAME)
 
+class BertClassificationModel(nn.Module):
+    def __init__(self):
+        super(BertClassificationModel, self).__init__()
+        self.bert_path = BERT_MODEL_NAME
+        self.bert = transformers.BertModel.from_pretrained(self.bert_path)
+        self.bert_drop=nn.Dropout(0.3)
+        self.out = nn.Linear(768, 2)
+        # self.out = nn.Linear(1024, 2)
+
+    def forward(self, ids, mask):
+        outputs = self.bert(input_ids=ids, attention_mask=mask)
+        rh=self.bert_drop(outputs.pooler_output)
+        return self.out(rh)
 
 # defining model and loading weights to it
 def model_fn(model_dir):
     print("Model loading")
-    checkpoints = []
-    
-    for file in os.listdir(model_dir):
-        if file.endswith(".pt"):
-            print(file)
-            checkpoints.append(file)
-    model = torch.load(f"{model_dir}/{checkpoints[0]}")
+    model = BertClassificationModel().to(device)
+    with open(os.path.join(model_dir, 'model_epoch_2.pt'), 'rb') as f:
+        model.load_state_dict(torch.load(f))
+
+    print("Model loaded")
     model.eval()
 
     return model
