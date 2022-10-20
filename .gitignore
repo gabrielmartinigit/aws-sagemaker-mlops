@@ -137,3 +137,7 @@ dmypy.json
 # AI/ML
 checkpoints/
 data/
+
+# CDK
+.cdk.staging
+cdk.out
