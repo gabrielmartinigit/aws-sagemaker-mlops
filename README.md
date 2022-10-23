@@ -1,5 +1,4 @@
-# Portal da Transparência - Analytics & AI/ML Pipeline
-
+# SageMaker MLOps example
 ## Architecture
 
 ![Architecture](./images/mlops.jpg)
