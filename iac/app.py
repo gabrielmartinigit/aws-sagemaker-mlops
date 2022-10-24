@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import os
 import aws_cdk as cdk
-from science_components.science_stack import ScienceStack
+from data_components.data_stack import DataStack
+from mlops_components.mlops_stack import MLOpsStack
 
 app = cdk.App()
-ScienceStack(app, "ScienceStack")
+DataStack(app, "DataStack")
+MLOpsStack(app, "MLOpsStack")
 
 app.synth()

@@ -16,7 +16,8 @@
 ```
 virtualenv .venv
 source .venv/bin/activate
-pip install -r requirements
+cd iac/
+pip install -r requirements.txt
 ```
 
 ### Deploy Components
@@ -26,7 +27,7 @@ cd iac/
 cdk ls
 cdk synth
 cdk bootstrap
-cdk deploy
+cdk deploy --all
 ```
 
 ## Links & References
