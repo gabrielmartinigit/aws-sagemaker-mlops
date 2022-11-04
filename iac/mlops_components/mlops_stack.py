@@ -21,5 +21,5 @@ class MLOpsStack(Stack):
             "Repository",
             repository_name="MLRepository",
             description="ML prep, train, inference, pipeline code.",
-            code=codecommit.Code.from_directory('../ml/repo/')
+            code=codecommit.Code.from_zip_file('../ml/repo/')
         )
