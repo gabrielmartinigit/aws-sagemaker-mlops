@@ -12,13 +12,15 @@ class MLOpsStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        ml_artifacts_bucket = s3.Bucket(self, "MLBucket")
+        ml_artifacts_bucket = s3.Bucket(
+            self,
+            "MLBucket"
+        )
 
-        repo = codecommit.Repository(self, "Repository",
-                                     repository_name="MLRepository",
-                                     description="ML prep, train, inference, pipeline code.",
-
-                                     )
-        code = codecommit.Code.from_directory('../ml/')
-
-        # Pipeline, feature store, dummy model, events
+        repo = codecommit.Repository(
+            self,
+            "Repository",
+            repository_name="MLRepository",
+            description="ML prep, train, inference, pipeline code.",
+            code=codecommit.Code.from_directory('../ml/')
+        )
