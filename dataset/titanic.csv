@@ -1,4 +1,4 @@
-,PassengerId,Survived,Pclass,Sex,Age,SibSp,Parch,EventTime
+Index,PassengerId,Survived,Pclass,Sex,Age,SibSp,Parch,EventTime
 0,1,0,3,0,22.0,1,0,1666613328.0
 1,2,1,1,1,38.0,1,0,1666613328.0
 2,3,1,3,1,26.0,0,0,1666613328.0
