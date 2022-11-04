@@ -141,3 +141,4 @@ data/
 # CDK
 .cdk.staging
 cdk.out
+cdk.context.json

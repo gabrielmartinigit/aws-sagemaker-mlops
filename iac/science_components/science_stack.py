@@ -10,7 +10,6 @@ import sagemakerStudioConstructs
 
 
 class ScienceStack(Stack):
-
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -33,7 +32,7 @@ class ScienceStack(Stack):
         default_vpc_id = ec2.Vpc.from_lookup(
             self,
             "VPC",
-            vpc_id=self.node.try_get_context('existing_vpc_id')
+            is_default=True
         )
 
         self.vpc_id = default_vpc_id.vpc_id
@@ -51,11 +50,10 @@ class ScienceStack(Stack):
         )
 
         team_to_add_in_sagemaker_studio = [
-            "datascientist-team-A2",
-            "datascientist-team-A3",
-            "datascientist-team-A4"
+            "dataengineer-user",
+            "datascientist-user"
         ]
-        
+
         for _team in team_to_add_in_sagemaker_studio:
             my_default_datascience_user = sagemakerStudioConstructs.SagemakerStudioUserConstruct(
                 self,
@@ -72,10 +70,10 @@ class ScienceStack(Stack):
                 export_name=F"UserArn{_team}"
             )
 
-            CfnOutput(
-                self,
-                "DomainIdSagemaker",
-                value=my_sagemaker_domain.sagemaker_domain_id,
-                description="The sagemaker domain ID",
-                export_name="DomainIdSagemaker"
-            )
+        CfnOutput(
+            self,
+            "DomainIdSagemaker",
+            value=my_sagemaker_domain.sagemaker_domain_id,
+            description="The sagemaker domain ID",
+            export_name="DomainIdSagemaker"
+        )
