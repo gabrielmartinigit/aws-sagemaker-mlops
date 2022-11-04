@@ -27,7 +27,7 @@ FRAMEWORK_VERSION = "0.23-1"
 
 sklearn_estimator = SKLearn(
     entry_point="train_inference.py",
-    source_dir="../train",
+    source_dir="../train_inference",
     role=sagemaker.get_execution_role(),
     instance_count=1,
     instance_type=training_instance_type,
