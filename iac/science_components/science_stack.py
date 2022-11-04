@@ -21,8 +21,16 @@ class ScienceStack(Stack):
             managed_policies=[
                 iam.ManagedPolicy.from_managed_policy_arn(
                     self,
-                    id="SagemakerReadAccess",
-                    managed_policy_arn="arn:aws:iam::aws:policy/AmazonSageMakerFullAccess")
+                    id="SagemakerFull",
+                    managed_policy_arn="arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"),
+                iam.ManagedPolicy.from_managed_policy_arn(
+                    self,
+                    id="S3Full",
+                    managed_policy_arn="arn:aws:iam::aws:policy/AmazonS3FullAccess"),
+                iam.ManagedPolicy.from_managed_policy_arn(
+                    self,
+                    id="CodeCommitPower",
+                    managed_policy_arn="arn:aws:iam::aws:policy/AWSCodeCommitPowerUser")
             ]
         )
 
