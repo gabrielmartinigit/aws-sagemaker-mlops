@@ -50,7 +50,7 @@ class ScienceStack(Stack):
         )
 
         team_to_add_in_sagemaker_studio = [
-            "dataengineer-user",
+            "mlengineer-user",
             "datascientist-user"
         ]
 
