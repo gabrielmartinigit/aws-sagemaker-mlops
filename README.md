@@ -14,6 +14,8 @@
 ### Install Dependencies
 
 ```
+git clone https://github.com/gabrielmartinigit/aws-sagemaker-mlops.git
+cd aws-sagemaker-mlops/
 pip3 install virtualenv
 virtualenv .venv
 source .venv/bin/activate
@@ -24,11 +26,10 @@ pip install -r requirements.txt
 ### Deploy Components
 
 ```
-cd iac/
 cdk ls
 cdk synth
 cdk bootstrap
-cdk deploy --all
+cdk deploy --all --require-approval never
 ```
 
 ## Links & References
